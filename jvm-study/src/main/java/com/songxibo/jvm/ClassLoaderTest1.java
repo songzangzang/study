@@ -27,7 +27,7 @@ public class ClassLoaderTest1 {
          *
          *  属于主动加载所以会对Child类进行初始化，在初始化的过程里首先会把父类进行初始化
          */
-        System.out.println(Child.b);
+//        System.out.println(Child.b);
 
     }
 
