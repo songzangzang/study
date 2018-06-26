@@ -15,7 +15,7 @@ public class ClassLoaderTest1 {
          * Parent Init
          * 1
          *
-         * 调用父类的静态变量不在主动加载的七种情况所以不会初始化子类，首先父类会把静态变量进行初始化，然后把值赋给子类的区域
+         * 调用父类的静态变量不在主动加载的七种情况所以不会初始化子类
          */
         System.out.println(Child.a);
 
