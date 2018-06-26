@@ -23,7 +23,7 @@ public class ClassLoaderTest2 {
 
     public static void main(String[] args) {
 
-        System.out.println(MyParent2.str);
+        System.out.println(MyParent2.i);
 
     }
 
