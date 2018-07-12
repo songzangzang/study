@@ -2,10 +2,12 @@ package com.songxibo.jvm;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.RandomAccessFile;
 
 /**
+ * 说明
+ * 因为加载的不是根目录，所以系统加载器找不到不能加载，所以会触发自定义加载器进行加载
+ *
+ *
  * 创建自己的类加载器
  *
  * @author songxibo
@@ -13,22 +15,31 @@ import java.io.RandomAccessFile;
  */
 public class ClassLoaderTest13 {
 
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) throws Exception {
 
         MyClassLoader classLoader = new MyClassLoader("myClassLoader");
+        classLoader.setPath("/Users/kaeraier/Desktop/");
         System.out.println(classLoader.getParent());
 
-        try {
+        Class clazz = classLoader.loadClass("com.songxibo.jvm.ClassLoaderTest1");
+        System.out.println(clazz.hashCode());
+        Object o = clazz.newInstance();
+        System.out.println(o);
 
-            Object o = classLoader.loadClass("com.songxibo.jvm.ClassLoaderTest1").newInstance();
-            System.out.println(classLoader);
-            System.out.println(o);
+        System.out.println("------");
 
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        MyClassLoader classLoader2 = new MyClassLoader("myClassLoader2");
+        classLoader2.setPath("/Users/kaeraier/Desktop/");
+        System.out.println(classLoader2.getParent());
+
+        Class clazz2 = classLoader2.loadClass("com.songxibo.jvm.ClassLoaderTest1");
+        System.out.println(clazz2.hashCode());
+        Object o2 = clazz2.newInstance();
+        System.out.println(o2);
+
+
+
+
 
     }
 
@@ -38,34 +49,32 @@ class MyClassLoader extends ClassLoader {
 
     private String name;
 
+    private String path;
+
     public MyClassLoader(ClassLoader parent, String name) {
         super(parent);
         this.name = name;
     }
 
     public MyClassLoader(String name) {
+
+        super();
         this.name = name;
+
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
 
-        String path = null;
+        System.out.println("myClassLoader print");
 
-        if (name.contains("/")) {
-
-            path = name;
-
-        } else {
-
-            StringBuilder sb = new StringBuilder("");
-            sb.append(name.replace(".", "/"));
-            sb.append(".class");
-            path = sb.toString();
-
-        }
-
-        File file = new File(path);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(path).append(name.replace(".", "/")).append(".class");
+        File file = new File(stringBuilder.toString());
         try {
 
             FileInputStream fs = new FileInputStream(file);
@@ -81,18 +90,6 @@ class MyClassLoader extends ClassLoader {
 
     }
 
-    /**
-     * 继续使用双亲委托模型
-     *
-     *
-     * @param name
-     * @return
-     * @throws ClassNotFoundException
-     */
-    @Override
-    public Class<?> loadClass(String name) throws ClassNotFoundException {
-        return super.loadClass(name);
-    }
 
     @Override
     public String toString() {
