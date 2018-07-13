@@ -37,10 +37,6 @@ public class ClassLoaderTest13 {
         Object o2 = clazz2.newInstance();
         System.out.println(o2);
 
-
-
-
-
     }
 
 }
