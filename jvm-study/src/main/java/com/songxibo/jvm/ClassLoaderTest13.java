@@ -45,7 +45,7 @@ class MyClassLoader extends ClassLoader {
 
     private String name;
 
-    private String path;
+    private String path = "";
 
     public MyClassLoader(ClassLoader parent, String name) {
         super(parent);
