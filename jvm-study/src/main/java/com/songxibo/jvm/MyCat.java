@@ -10,9 +10,11 @@ public class MyCat {
 
     public MyCat() {
 
-        System.out.println("MyCat init print");
+        System.out.println("MyCat init print classLoader:" + this.getClass().getClassLoader());
 
         new MySample();
+
+//        System.out.println(MySample.class);
 
     }
 

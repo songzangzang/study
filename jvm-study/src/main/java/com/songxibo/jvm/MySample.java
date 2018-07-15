@@ -9,6 +9,9 @@ package com.songxibo.jvm;
 public class MySample {
 
     public MySample() {
-        System.out.println("MySample init print");
+
+        System.out.println("MySample init print classLoader：" + this.getClass().getClassLoader());
+//        System.out.println(MyCat.class);
     }
+
 }
