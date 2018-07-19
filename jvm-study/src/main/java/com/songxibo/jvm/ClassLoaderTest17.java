@@ -43,8 +43,6 @@ public class ClassLoaderTest17 {
          */
         System.out.println(ClassLoader.class.getClassLoader());
 
-
-
     }
 
 }
