@@ -10,6 +10,9 @@ import java.sql.DriverManager;
  * 分析源码得知，主动使用DriverManager的时候，DriverManager的static代码块会主动加载全部的实现类，
  * 待测试，是否不使用Class.forName也能直接获取到连接。
  *
+ * 执行Class.forName("com.mysql.jdbc.Driver")的时候会把Driver注册到DriverManager上面，首先DriverManager会判断
+ * 是否存在这个实现，如果没有会进行存储，有就会跳过。
+ *
  * @author songxibo
  * @date 2018/7/2118:17
  */
